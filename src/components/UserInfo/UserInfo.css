@@ -1,0 +1,15 @@
+.user-info {
+    margin-top: 50px;
+    font-size: 24px;
+}
+
+.btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 18px;
+}
+
+.user-info img {
+    width: 200px;
+    height: 200px;
+}
