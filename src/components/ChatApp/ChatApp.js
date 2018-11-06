@@ -8,6 +8,8 @@ import { firestoreConnect } from 'react-redux-firebase'
 import MainUser from "./MainUser";
 import ChatHeader from "./ChatHeader";
 import ListUsers from "./ListUsers";
+import ChatHistory from "./ChatHistory";
+import ChatBox from "./ChatBox";
 
 class ChatApp extends Component {
   static propTypes = {
@@ -30,63 +32,7 @@ class ChatApp extends Component {
           </div>
           <div className="chat">
             <ChatHeader />
-
-            <div className="chat-history">
-              <ul>
-                <li className="cus-clearfix">
-                  <div className="message-data align-right">
-                    <span className="message-data-time">10:10 AM, Today</span>{" "}
-                    &nbsp; &nbsp;
-                    <span className="message-data-name">Olia</span>{" "}
-                    <i className="fa fa-circle me" />
-                  </div>
-                  <div className="message other-message float-right">
-                    Hi Vincent, how are you? How is the project coming along?
-                  </div>
-                </li>
-                <li>
-                  <div className="message-data">
-                    <span className="message-data-name">
-                      <i className="fa fa-circle online" /> Vincent
-                    </span>
-                    <span className="message-data-time">10:20 AM, Today</span>
-                  </div>
-                  <div className="message my-message">
-                    Actually everything was fine. I'm very excited to show this
-                    to our team.
-                  </div>
-                </li>
-                <li>
-                  <div className="message-data">
-                    <span className="message-data-name">
-                      <i className="fa fa-circle online" /> Vincent
-                    </span>
-                    <span className="message-data-time">10:31 AM, Today</span>
-                  </div>
-                  <i className="fa fa-circle online" />
-                  <i
-                    className="fa fa-circle online"
-                    style={{ color: "#AED2A6" }}
-                  />
-                  <i
-                    className="fa fa-circle online"
-                    style={{ color: "#DAE9DA" }}
-                  />
-                </li>
-              </ul>
-            </div>
-            <div className="chat-message cus-clearfix">
-              <textarea
-                name="message-to-send"
-                id="message-to-send"
-                placeholder="Type your message"
-                rows={3}
-                defaultValue={""}
-              />
-              <i className="fa fa-file-o" /> &nbsp;&nbsp;&nbsp;
-              <i className="fa fa-file-image-o" />
-              <button>Send</button>
-            </div>
+            <ChatBox />
           </div>
         </div>
       </div>
