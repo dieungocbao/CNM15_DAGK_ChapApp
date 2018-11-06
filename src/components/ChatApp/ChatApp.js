@@ -32,6 +32,7 @@ class ChatApp extends Component {
           </div>
           <div className="chat">
             <ChatHeader />
+            <ChatHistory />
             <ChatBox />
           </div>
         </div>
