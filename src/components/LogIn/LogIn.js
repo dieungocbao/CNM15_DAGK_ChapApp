@@ -1,18 +1,46 @@
-import React, { Component } from "react";
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { compose } from 'redux'
+import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase'
 import "./LogIn.css";
 
-export default class LogIn extends Component {
+class LogIn extends Component {
+  static propTypes = {
+    auth: PropTypes.object,
+    firebase: PropTypes.shape({
+      login: PropTypes.func.isRequired,
+      logout: PropTypes.func.isRequired,
+    }),
+  }
   render() {
-    return (
-      <div>
-        <div className="text-center oauth">
-          <p>Please click button below to sign in!</p>
-          <button className="btn btn-danger" onClick={this.props.onLogIn}>
-            <i className="fa fa-google" />
-            Log In With Google
-          </button>
+    if (!isLoaded(this.props.auth)) {
+      return null
+    }
+    if (isEmpty(this.props.auth)) {
+      return (
+        <div>
+          <button
+            onClick={
+              () => this.props.firebase.login({ provider: 'google', type: 'popup' })
+            }
+          >Log in with Google</button>
         </div>
-      </div>
-    );
+      )
+    }
+    return <button
+      style={{ width: "20rem" }}
+      onClick={() => this.props.firebase.logout()}
+    > Logout</button>
+
   }
 }
+const mapStateToProps = state => {
+  return { auth: state.firebase.auth }
+}
+const mapDispatchToProps = {
+}
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  firebaseConnect()
+)(LogIn)
