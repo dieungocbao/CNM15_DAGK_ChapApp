@@ -6,10 +6,13 @@ import { compose } from 'redux'
 import { firestoreConnect } from 'react-redux-firebase'
 
 import MainUser from "./MainUser";
+import ChatHeader from "./ChatHeader";
+import ListUsers from "./ListUsers";
 
 class ChatApp extends Component {
   static propTypes = {
-    uid: PropTypes.strng
+    auth: PropTypes.object,
+    uid: PropTypes.string
   }
   render() {
     if (!this.props.uid) return null
@@ -21,45 +24,13 @@ class ChatApp extends Component {
               <input type="text" placeholder="search" />
               <i className="fa fa-search" />
             </div>
-            <div className="main-user cus-clearfix user-photo">
-              <MainUser />
-            </div>
+            <MainUser />
             <hr />
-            <ul className="list">
-              {/* {
-                this.props.users.map((user, index) => {
-                  return (
-                    <li className="cus-clearfix user-photo" key={index}>
-                      <img
-                        src={user.profile_picture}
-                        alt="avatar"
-                        className="img-responsive rounded-circle"
-                      />
-                      <div className="about">
-                        <div className="name">{user.displayName}</div>
-                        <div className="status">
-                          {(user.isActive) ? <span><i className="fa fa-circle online" /> online</span> : <span><i className="fa fa-circle offline" /> offline</span>}
-                        </div>
-                      </div>
-                    </li>
-                  )
-                })
-              } */}
-            </ul>
+            <ListUsers />
           </div>
           <div className="chat">
-            <div className="chat-header cus-clearfix">
-              <img
-                src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_01_green.jpg"
-                alt="avatar"
-              />
-              <div className="chat-about">
-                <div className="chat-with">Chat with Vincent Porter</div>
-                <div className="chat-num-messages">already 1 902 messages</div>
-              </div>
-              <i className="fa fa-star" />
-            </div>{" "}
-            {/* end chat-header */}
+            <ChatHeader />
+
             <div className="chat-history">
               <ul>
                 <li className="cus-clearfix">
@@ -125,6 +96,7 @@ class ChatApp extends Component {
 
 const mapStateToProps = state => {
   return {
+    auth: state.firebase.auth,
     uid: state.firebase.auth.uid
   }
 }

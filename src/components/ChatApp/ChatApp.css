@@ -214,3 +214,12 @@ body {
 hr {
     background-color: gray;
 }
+
+.chat-header img {
+  width: 50px;
+  height: 50px;
+}
+
+.chat-header .chat-about .chat-with {
+  line-height: 2;
+}

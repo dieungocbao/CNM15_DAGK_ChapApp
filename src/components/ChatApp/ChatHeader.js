@@ -4,24 +4,22 @@ import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { firestoreConnect } from 'react-redux-firebase'
 
-class MainUser extends Component {
+class ChatHeader extends Component {
     static propTypes = {
         auth: PropTypes.object
     }
     render() {
         return (
-            <div className="main-user cus-clearfix user-photo">
+            <div className="chat-header cus-clearfix">
                 <img
                     src={this.props.auth.photoURL}
-                    alt="photo_avatar"
+                    alt="avatar"
                     className="img-responsive rounded-circle"
                 />
-                <div className="about">
-                    <div className="name">{this.props.auth.displayName}</div>
-                    <div className="status">
-                        <span><i className="fa fa-circle online" /> online</span>
-                    </div>
+                <div className="chat-about">
+                    <div className="chat-with">Chat with {this.props.auth.displayName}</div>
                 </div>
+                <i className="fa fa-star" />
             </div>
         )
     }
@@ -37,4 +35,4 @@ const mapDispatchToProps = {}
 export default compose(
     connect(mapStateToProps, mapDispatchToProps),
     firestoreConnect(),
-)(MainUser)
+)(ChatHeader)
