@@ -41,10 +41,10 @@ class ChatApp extends Component {
             </div>
             <MainUser />
             <hr />
-            <ListUsers getUser={this.getUser} searchName={this.state.searchName}/>
+            <ListUsers getUser={this.getUser} searchName={this.state.searchName} />
           </div>
           <div className="chat">
-            <ChatHeader />
+            {this.state.getUserChat ? <ChatHeader getUserChat={this.state.getUserChat} /> : ''}
             {this.state.getUserChat ? <ChatHistory getUserChat={this.state.getUserChat} roomChat={this.state.roomChat} /> : ''}
             <ChatBox roomChat={this.state.roomChat} />
           </div>
