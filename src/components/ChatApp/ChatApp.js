@@ -17,11 +17,17 @@ class ChatApp extends Component {
     uid: PropTypes.string
   }
   state = {
+    searchName: null,
     getUserChat: null,
     roomChat: ''
   }
   getUser = (user, room) => {
     this.setState({ getUserChat: user, roomChat: room })
+  }
+  onhandleChange = (e) => {
+    this.setState({
+      searchName: e.target.value
+    })
   }
   render() {
     if (!this.props.uid) return null
@@ -30,17 +36,17 @@ class ChatApp extends Component {
         <div className="cus-container cus-clearfix">
           <div className="people-list" id="people-list">
             <div className="search">
-              <input type="text" placeholder="search" />
+              <input type="text" placeholder="search" onChange={this.onhandleChange} />
               <i className="fa fa-search" />
             </div>
             <MainUser />
             <hr />
-            <ListUsers getUser={this.getUser} />
+            <ListUsers getUser={this.getUser} searchName={this.state.searchName}/>
           </div>
           <div className="chat">
             <ChatHeader />
-            {this.state.getUserChat ? <ChatHistory getUserChat={this.state.getUserChat} roomChat={this.state.roomChat}/> : ''}
-            <ChatBox roomChat={this.state.roomChat}/>
+            {this.state.getUserChat ? <ChatHistory getUserChat={this.state.getUserChat} roomChat={this.state.roomChat} /> : ''}
+            <ChatBox roomChat={this.state.roomChat} />
           </div>
         </div>
       </div>

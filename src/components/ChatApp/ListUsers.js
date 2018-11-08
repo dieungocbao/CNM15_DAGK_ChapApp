@@ -54,6 +54,9 @@ class ListUsers extends Component {
     render() {
         let users = this.props.users
         users = users.filter(user => user.email !== this.props.email)
+        if (this.props.searchName) {
+            users = users.filter(user => user.displayName.toLowerCase().indexOf(this.props.searchName) !== -1)
+        }
         const listUsers = users.map(
             (user) => this.renderCategory(user)
         )
