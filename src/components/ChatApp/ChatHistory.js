@@ -18,7 +18,7 @@ class ChatHistory extends Component {
                     <div className="message-data align-right">
                         <span className="message-data-time">10:10 AM, Today</span>
                         &nbsp; &nbsp;
-                        <span className="message-data-name">{this.props.getUserChat.displayName}</span>
+                        <span className="message-data-name">{this.props.displayName}</span>
                         &nbsp;
                         <i className="fa fa-circle me" />
                     </div>
@@ -30,14 +30,14 @@ class ChatHistory extends Component {
                 <li className="cus-clearfix" key={index}>
                     <div className="message-data">
                         <span className="message-data-name">
-                            <i className="fa fa-circle online" /> {this.props.displayName}
+                            <i className="fa fa-circle online" /> {this.props.getUserChat.displayName}
                         </span>
                         {/* <span className="message-data-time">10:20 AM, Today</span> */}
                     </div>
                     <div className="message my-message">
                         {message.message}
                     </div>
-                </li>   
+                </li>
             )
 
         )
