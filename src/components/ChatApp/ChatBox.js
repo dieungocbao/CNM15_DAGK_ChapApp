@@ -39,7 +39,7 @@ class ChatBox extends Component {
                         onChange={(evt) => this.setState({ chatMessage: evt.target.value })}
                     />
                     <i className="fa fa-file-o" /> &nbsp;&nbsp;&nbsp;
-              <i className="fa fa-file-image-o" />
+                    <i className="fa fa-file-image-o" />
                     <button onClick={() => this.addChatMessage()}>Send</button>
                 </div>
             </div>

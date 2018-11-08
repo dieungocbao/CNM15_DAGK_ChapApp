@@ -44,9 +44,10 @@ class ChatApp extends Component {
             <ListUsers getUser={this.getUser} searchName={this.state.searchName} />
           </div>
           <div className="chat">
+            {(this.state.getUserChat === null) ? <div className="no-chat">Click user on user list to start chat</div> : ''}
             {this.state.getUserChat ? <ChatHeader getUserChat={this.state.getUserChat} /> : ''}
             {this.state.getUserChat ? <ChatHistory getUserChat={this.state.getUserChat} roomChat={this.state.roomChat} /> : ''}
-            <ChatBox roomChat={this.state.roomChat} />
+            {this.state.getUserChat ? <ChatBox roomChat={this.state.roomChat} /> : ''}
           </div>
         </div>
       </div>

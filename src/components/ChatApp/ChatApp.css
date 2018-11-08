@@ -45,7 +45,7 @@ body {
 }
 .people-list ul {
   padding: 0 20px 20px 20px;
-  height: 640px;
+  height: 400px;
 }
 .people-list ul li {
   padding-bottom: 20px;
@@ -102,7 +102,7 @@ body {
   padding: 30px 30px 20px;
   border-bottom: 2px solid white;
   overflow-y: scroll;
-  height: 575px;
+  height: 350px;
 }
 .chat .chat-history li {
   list-style-type: none;
@@ -222,4 +222,12 @@ hr {
 
 .chat-header .chat-about .chat-with {
   line-height: 2;
+}
+
+.chat .no-chat {
+  height: 550px;
+  font-size: 24px;
+  text-align: center;
+  color: #a8aab1;
+  margin-top: 200px;
 }
