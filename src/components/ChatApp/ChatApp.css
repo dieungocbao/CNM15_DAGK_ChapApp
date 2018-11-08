@@ -165,7 +165,7 @@ body {
   color: gray;
   cursor: pointer;
 }
-.chat .chat-message button {
+.chat .chat-message button.send {
   float: right;
   color: #94c2ed;
   font-size: 16px;
@@ -175,7 +175,7 @@ body {
   font-weight: bold;
   background: #f2f5f8;
 }
-.chat .chat-message button:hover {
+.chat .chat-message button.send:hover {
   color: #75b1e8;
 }
 .online,
@@ -230,4 +230,12 @@ hr {
   text-align: center;
   color: #a8aab1;
   margin-top: 200px;
+}
+
+.modal-dialog .modal-body input{
+  width: 100%;
+}
+.chat .chat-history img.img-chat {
+  width: 200px;
+  height: auto;
 }

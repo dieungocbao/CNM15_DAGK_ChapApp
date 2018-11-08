@@ -22,9 +22,18 @@ class ChatHistory extends Component {
                         &nbsp;
                         <i className="fa fa-circle me" />
                     </div>
-                    <div className="message other-message float-right">
-                        {message.message}
-                    </div>
+                    {(message.type === "text") ?
+                        <div className="message other-message float-right">
+                            {message.message}
+                        </div>
+                        : <div className="float-right">
+                            <img
+                                src={message.message}
+                                alt="photo_chat"
+                                className="img-responsive img-chat"
+                            />
+                        </div>
+                    }
                 </li>
                 :
                 <li className="cus-clearfix" key={index}>
@@ -34,9 +43,19 @@ class ChatHistory extends Component {
                         </span>
                         {/* <span className="message-data-time">10:20 AM, Today</span> */}
                     </div>
-                    <div className="message my-message">
-                        {message.message}
-                    </div>
+
+                    {(message.type === "text") ?
+                        <div className="message my-message">
+                            {message.message}
+                        </div>
+                        : <div>
+                            <img
+                                src={message.message}
+                                alt="photo_chat"
+                                className="img-responsive img-chat"
+                            />
+                        </div>
+                    }
                 </li>
             )
 

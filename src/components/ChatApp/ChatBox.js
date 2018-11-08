@@ -12,7 +12,8 @@ class ChatBox extends Component {
         }).isRequired
     }
     state = {
-        chatMessage: ''
+        chatMessage: '',
+        imageLink: null
     }
     addChatMessage() {
         this.props.firestore.add(
@@ -20,12 +21,32 @@ class ChatBox extends Component {
             {
                 message: this.state.chatMessage,
                 uid: this.props.uid,
-                room: this.props.roomChat
+                room: this.props.roomChat,
+                type: 'text'
             }
         )
         this.setState({ chatMessage: '' })
         this.refs.chatbox.value = ''
     }
+    handleChange = (e) => {
+        this.setState({
+            imageLink: e.target.value
+        })
+    }
+    onSaveLink = () => {
+        this.props.firestore.add(
+            { collection: 'messages' },
+            {
+                message: this.state.imageLink,
+                uid: this.props.uid,
+                room: this.props.roomChat,
+                type: 'image'
+            }
+        )
+        this.setState({ imageLink: null })
+        this.refs.imagelink.value = ''
+    }
+
     render() {
         return (
             <div>
@@ -39,8 +60,27 @@ class ChatBox extends Component {
                         onChange={(evt) => this.setState({ chatMessage: evt.target.value })}
                     />
                     <i className="fa fa-file-o" /> &nbsp;&nbsp;&nbsp;
-                    <i className="fa fa-file-image-o" />
-                    <button onClick={() => this.addChatMessage()}>Send</button>
+
+                    <i className="fa fa-file-image-o" data-toggle="modal" data-target="#exampleModal" />
+                    <div className="modal fade" id="exampleModal" tabIndex={-1} role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div className="modal-dialog" role="document">
+                            <div className="modal-content">
+                                <div className="modal-header">
+                                    <h5 className="modal-title" id="exampleModalLabel">Insert image link</h5>
+                                    <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                                <div className="modal-body">
+                                    <input type="text" onChange={this.handleChange} placeholder="Link..." ref="imagelink" />
+                                </div>
+                                <div className="modal-footer">
+                                    <button type="button" className="btn btn-primary" data-dismiss="modal" onClick={this.onSaveLink}>Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="send" onClick={() => this.addChatMessage()}>Send</button>
                 </div>
             </div>
         )
