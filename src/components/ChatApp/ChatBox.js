@@ -6,7 +6,7 @@ import { firestoreConnect } from 'react-redux-firebase'
 
 class ChatBox extends Component {
     static propTypes = {
-        email: PropTypes.string,
+        uid: PropTypes.string,
         firestore: PropTypes.shape({
             add: PropTypes.func.isRequired
         }).isRequired
@@ -19,7 +19,8 @@ class ChatBox extends Component {
             { collection: 'messages' },
             {
                 message: this.state.chatMessage,
-                email: this.props.email
+                uid: this.props.uid,
+                room: this.props.roomChat
             }
         )
         this.setState({ chatMessage: '' })
@@ -48,7 +49,7 @@ class ChatBox extends Component {
 
 const mapStateToProps = state => {
     return {
-        email: state.firebase.auth.email
+        uid: state.firebase.auth.uid
     }
 }
 const mapDispatchToProps = {}

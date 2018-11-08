@@ -9,11 +9,34 @@ class ListUsers extends Component {
     static propTypes = {
         uid: PropTypes.string,
         email: PropTypes.string,
-        users: PropTypes.arrayOf(PropTypes.object)
+        users: PropTypes.arrayOf(PropTypes.object),
+        firestore: PropTypes.shape({
+            add: PropTypes.func.isRequired
+        }).isRequired
+    }
+    getUser = (uid) => {
+        let user1 = this.props.uid
+        let user2 = uid
+        user1 = user1.slice(0, 5)
+        user2 = user2.slice(0, 5)
+        let roomKey
+        if (user1 < user2) {
+            roomKey = user1 + user2
+        } else if (user1 > user2) {
+            roomKey = user2 + user1
+        }
+        this.props.firestore.add(
+            { collection: 'rooms' },
+            {
+                room: roomKey
+            }
+        )
+        let user = this.props.users.filter(user => user.id === uid)
+        this.props.getUser(user[0], roomKey)
     }
     renderCategory(user) {
         return (
-            <li className="cus-clearfix user-photo" key={user.id}>
+            <li className="cus-clearfix user-photo" key={user.id} onClick={() => this.getUser(user.id)}>
                 <img
                     src={user.avatarUrl}
                     alt="avatar"

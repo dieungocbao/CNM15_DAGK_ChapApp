@@ -16,6 +16,13 @@ class ChatApp extends Component {
     auth: PropTypes.object,
     uid: PropTypes.string
   }
+  state = {
+    getUserChat: null,
+    roomChat: ''
+  }
+  getUser = (user, room) => {
+    this.setState({ getUserChat: user, roomChat: room })
+  }
   render() {
     if (!this.props.uid) return null
     return (
@@ -28,12 +35,12 @@ class ChatApp extends Component {
             </div>
             <MainUser />
             <hr />
-            <ListUsers />
+            <ListUsers getUser={this.getUser} />
           </div>
           <div className="chat">
             <ChatHeader />
-            <ChatHistory />
-            <ChatBox />
+            {this.state.getUserChat ? <ChatHistory getUserChat={this.state.getUserChat} roomChat={this.state.roomChat}/> : ''}
+            <ChatBox roomChat={this.state.roomChat}/>
           </div>
         </div>
       </div>
