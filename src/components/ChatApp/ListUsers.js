@@ -11,7 +11,7 @@ class ListUsers extends Component {
         email: PropTypes.string,
         users: PropTypes.arrayOf(PropTypes.object),
         firestore: PropTypes.shape({
-            add: PropTypes.func.isRequired
+            set: PropTypes.func.isRequired
         }).isRequired
     }
     getUser = (uid) => {
@@ -25,8 +25,8 @@ class ListUsers extends Component {
         } else if (user1 > user2) {
             roomKey = user2 + user1
         }
-        this.props.firestore.add(
-            { collection: 'rooms' },
+        this.props.firestore.set(
+            { collection: 'rooms', doc: roomKey },
             {
                 room: roomKey
             }
