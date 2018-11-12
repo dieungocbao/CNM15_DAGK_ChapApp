@@ -243,3 +243,7 @@ hr {
 i.fa-star {
   cursor: pointer;
 }
+
+.yellow {
+  color: yellow;
+}

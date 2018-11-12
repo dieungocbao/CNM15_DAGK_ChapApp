@@ -14,7 +14,8 @@ import ChatBox from "./ChatBox";
 class ChatApp extends Component {
   static propTypes = {
     auth: PropTypes.object,
-    uid: PropTypes.string
+    uid: PropTypes.string,
+    markUsers: PropTypes.arrayOf(PropTypes.object),
   }
   state = {
     searchName: null,
@@ -45,7 +46,7 @@ class ChatApp extends Component {
           </div>
           <div className="chat">
             {(this.state.getUserChat === null) ? <div className="no-chat">Click user on user list to start chat</div> : ''}
-            {this.state.getUserChat ? <ChatHeader getUserChat={this.state.getUserChat} /> : ''}
+            {this.state.getUserChat ? <ChatHeader getUserChat={this.state.getUserChat} listMarkUser={(this.props.markUsers[0]) ? this.props.markUsers[0] : this.props.markUsers} /> : ''}
             {this.state.getUserChat ? <ChatHistory getUserChat={this.state.getUserChat} roomChat={this.state.roomChat} /> : ''}
             {this.state.getUserChat ? <ChatBox roomChat={this.state.roomChat} /> : ''}
           </div>
@@ -58,11 +59,21 @@ class ChatApp extends Component {
 const mapStateToProps = state => {
   return {
     auth: state.firebase.auth,
-    uid: state.firebase.auth.uid
+    uid: state.firebase.auth.uid,
+    markUsers: state.firestore.ordered.markUsers ? state.firestore.ordered.markUsers.map(c => c) : [],
   }
 }
 const mapDispatchToProps = {}
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
-  firestoreConnect(),
+  firestoreConnect((props) => {
+    if (!props.uid) return []
+    return [
+      {
+        collection: 'markUsers',
+        doc: props.uid
+      }
+    ]
+  }
+  )
 )(ChatApp)

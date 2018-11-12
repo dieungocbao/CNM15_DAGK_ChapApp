@@ -7,14 +7,80 @@ import { firestoreConnect } from 'react-redux-firebase'
 class ChatHeader extends Component {
     static propTypes = {
         auth: PropTypes.object,
-        usersByPerson: PropTypes.arrayOf(PropTypes.object),
         firestore: PropTypes.shape({
-            set: PropTypes.func.isRequired
-        }).isRequired
+            set: PropTypes.func.isRequired,
+            delete: PropTypes.func.isRequired
+        }).isRequired,
+        markUsers: PropTypes.arrayOf(PropTypes.object),
     }
-    // getMark = (uid) => {
-    //     let users = this.props.usersByPerson[0].users
-    // }
+    state = {
+        isMark: false
+    }
+    getMark = (uid, markUsers) => {
+        if (markUsers.markUser) {
+            if (markUsers.markUser.length > 0) {
+                let check = -1
+                markUsers.markUser.map(mark => {
+                    return (mark.markUser === uid) ? check = 0 : ''
+                })
+                if (check === 0) {
+                    let temp = markUsers.markUser.filter(mark => {
+                        return mark.markUser !== uid
+                    })
+                    this.props.firestore.delete({ collection: 'markUsers', doc: this.props.auth.uid })
+                    this.props.firestore.set(
+                        { collection: 'markUsers', doc: this.props.auth.uid },
+                        {
+                            markUser: temp
+                        }
+                    )
+                } else {
+                    let temp = markUsers.markUser
+                    let mark = {
+                        markUser: uid,
+                        uid: this.props.auth.uid
+                    }
+                    temp.push(mark)
+                    this.props.firestore.set(
+                        { collection: 'markUsers', doc: this.props.auth.uid },
+                        {
+                            markUser: temp
+                        }
+                    )
+                }
+            } else {
+                if (markUsers.markUser.markUser === uid) {
+                    this.props.firestore.delete({ collection: 'markUsers', doc: this.props.auth.uid })
+                }
+                else {
+                    let temp = []
+                    temp.push(markUsers.markUser)
+                    let mark = {
+                        markUser: uid,
+                        uid: this.props.auth.uid
+                    }
+                    temp.push(mark)
+                    this.props.firestore.set(
+                        { collection: 'markUsers', doc: this.props.auth.uid },
+                        {
+                            markUser: temp
+                        }
+                    )
+                }
+            }
+        } else {
+            let mark = {
+                markUser: uid,
+                uid: this.props.auth.uid
+            }
+            this.props.firestore.set(
+                { collection: 'markUsers', doc: this.props.auth.uid },
+                {
+                    markUser: mark
+                }
+            )
+        }
+    }
     render() {
         return (
             <div className="chat-header cus-clearfix">
@@ -26,7 +92,7 @@ class ChatHeader extends Component {
                 <div className="chat-about">
                     <div className="chat-with">Chat with {this.props.getUserChat.displayName}</div>
                 </div>
-                <i className="fa fa-star" onClick={() => this.getMark(this.props.getUserChat.uid)} />
+                <i className="fa fa-star" onClick={() => this.getMark(this.props.getUserChat.uid, this.props.listMarkUser)} />
             </div>
         )
     }
@@ -36,7 +102,7 @@ class ChatHeader extends Component {
 const mapStateToProps = state => {
     return {
         auth: state.firebase.auth,
-        usersByPerson: state.firestore.ordered.usersByPerson ? state.firestore.ordered.usersByPerson.map(c => c) : []
+        markUsers: state.firestore.ordered.markUsers ? state.firestore.ordered.markUsers.map(c => c) : [],
     }
 }
 const mapDispatchToProps = {}
@@ -46,11 +112,10 @@ export default compose(
         if (!props.uid) return []
         return [
             {
-                collection: 'usersByPerson',
-                where: [
-                    ['uid', '==', props.uid]
-                ]
+                collection: 'markUsers',
+                doc: props.uid
             }
         ]
-    })
+    }
+    )
 )(ChatHeader)
