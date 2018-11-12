@@ -35,7 +35,12 @@ class ListUsers extends Component {
         let user = this.props.users.filter(user => user.uid === uid)
         this.props.getUser(user[0], roomKey)
     }
-   
+    calculateOfflineTime = (timeOffline) => {
+        let date = new Date()
+        let dateTime = date.getTime()
+        let temp = parseInt(dateTime, 10) - parseInt(timeOffline, 10)
+        return timeConversion(temp) + ' '
+    }
     renderCategory(user) {
         return (
             <li className="cus-clearfix user-photo" key={user.id} onClick={() => this.getUser(user.uid)}>
@@ -53,6 +58,10 @@ class ListUsers extends Component {
                             :
                             <span>
                                 <i className="fa fa-circle offline" /> offline
+                                <span className="offline-time">
+                                    {this.calculateOfflineTime(user.lastOnline)}
+                                    ago
+                                </span>
                             </span>}
                     </div>
                 </div>
@@ -96,3 +105,24 @@ export default compose(
         ]
     })
 )(ListUsers)
+
+function timeConversion(millisec) {
+
+    var seconds = (millisec / 1000).toFixed(0);
+
+    var minutes = (millisec / (1000 * 60)).toFixed(0);
+
+    var hours = (millisec / (1000 * 60 * 60)).toFixed(0);
+
+    var days = (millisec / (1000 * 60 * 60 * 24)).toFixed(0);
+
+    if (seconds < 60) {
+        return seconds + " seconds";
+    } else if (minutes < 60) {
+        return minutes + " minutes";
+    } else if (hours < 24) {
+        return hours + " hours";
+    } else {
+        return days + " days"
+    }
+}

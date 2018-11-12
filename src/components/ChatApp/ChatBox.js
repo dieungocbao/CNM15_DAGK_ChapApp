@@ -93,8 +93,7 @@ class ChatBox extends Component {
                         }
                     })
             })
-
-
+            this.refs.fileUpload.value = ''
     }
     render() {
         return (
@@ -143,7 +142,7 @@ class ChatBox extends Component {
                                     </button>
                                 </div>
                                 <div className="modal-body">
-                                    <input type="file" onChange={this.fileSelectedHandler} accept="image/*" />
+                                    <input type="file" onChange={this.fileSelectedHandler} accept="image/*" ref="fileUpload"/>
                                 </div>
                                 <div className="modal-footer">
                                     <button type="button" className="btn btn-primary" data-dismiss="modal" onClick={this.uploadFile}>Save changes</button>
