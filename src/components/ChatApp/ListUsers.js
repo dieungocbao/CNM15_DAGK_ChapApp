@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { firestoreConnect } from 'react-redux-firebase'
-
+import './css/ListUsers.css'
 
 class ListUsers extends Component {
     static propTypes = {
@@ -14,6 +14,7 @@ class ListUsers extends Component {
             set: PropTypes.func.isRequired
         }).isRequired
     }
+
     getUser = (uid) => {
         let user1 = this.props.uid
         let user2 = uid
@@ -31,21 +32,28 @@ class ListUsers extends Component {
                 room: roomKey
             }
         )
-        let user = this.props.users.filter(user => user.id === uid)
+        let user = this.props.users.filter(user => user.uid === uid)
         this.props.getUser(user[0], roomKey)
     }
+   
     renderCategory(user) {
         return (
-            <li className="cus-clearfix user-photo" key={user.id} onClick={() => this.getUser(user.id)}>
+            <li className="cus-clearfix user-photo" key={user.id} onClick={() => this.getUser(user.uid)}>
                 <img
-                    src={user.avatarUrl}
+                    src={user.photoURL}
                     alt="avatar"
                     className="img-responsive rounded-circle"
                 />
                 <div className="about">
                     <div className="name">{user.displayName}</div>
                     <div className="status">
-                        <span><i className="fa fa-circle online" /> online</span>
+                        {(user.status === true)
+                            ?
+                            <span><i className="fa fa-circle online" /> online</span>
+                            :
+                            <span>
+                                <i className="fa fa-circle offline" /> offline
+                            </span>}
                     </div>
                 </div>
             </li>

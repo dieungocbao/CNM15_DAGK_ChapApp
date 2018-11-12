@@ -17,7 +17,7 @@ const enhancers = [
     reduxFirestore(firebase),
     reactReduxFirebase(firebase, {
         userProfile: 'users',
-        useFirestoreForProfile: true,
+        useFirestoreForProfile: false,
     })
 ]
 

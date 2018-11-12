@@ -12,7 +12,7 @@ class ChatHeader extends Component {
         return (
             <div className="chat-header cus-clearfix">
                 <img
-                    src={this.props.getUserChat.avatarUrl}
+                    src={this.props.getUserChat.photoURL}
                     alt="avatar"
                     className="img-responsive rounded-circle"
                 />

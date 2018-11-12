@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./ChatApp.css";
+import "./css/ChatApp.css";
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
