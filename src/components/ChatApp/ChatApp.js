@@ -42,11 +42,11 @@ class ChatApp extends Component {
             </div>
             <MainUser />
             <hr />
-            <ListUsers getUser={this.getUser} searchName={this.state.searchName} />
+            <ListUsers getUser={this.getUser} searchName={this.state.searchName} listMarkUser={this.props.markUsers} />
           </div>
           <div className="chat">
             {(this.state.getUserChat === null) ? <div className="no-chat">Click user on user list to start chat</div> : ''}
-            {this.state.getUserChat ? <ChatHeader getUserChat={this.state.getUserChat} listMarkUser={(this.props.markUsers[0]) ? this.props.markUsers[0] : this.props.markUsers} /> : ''}
+            {this.state.getUserChat ? <ChatHeader getUserChat={this.state.getUserChat} listMarkUser={this.props.markUsers} /> : ''}
             {this.state.getUserChat ? <ChatHistory getUserChat={this.state.getUserChat} roomChat={this.state.roomChat} /> : ''}
             {this.state.getUserChat ? <ChatBox roomChat={this.state.roomChat} /> : ''}
           </div>
@@ -71,7 +71,9 @@ export default compose(
     return [
       {
         collection: 'markUsers',
-        doc: props.uid
+        where: [
+          ['uid', '==', props.uid]
+        ]
       }
     ]
   }

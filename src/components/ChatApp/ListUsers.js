@@ -68,6 +68,15 @@ class ListUsers extends Component {
             </li>
         )
     }
+    checkMarkUser = (uid) => {
+        let check = -1
+        this.props.listMarkUser.map(mark => {
+            return (mark.markUser === uid) ? check = 0 : null
+        })
+        if (check === 0) {
+            return true
+        } else return false
+    }
     render() {
         let users = this.props.users
         users = users.filter(user => user.email !== this.props.email)
@@ -76,10 +85,26 @@ class ListUsers extends Component {
         }
         let onlineUsers = []
         let offlineUsers = []
+        let markUsers = []
         users.map(user => {
-            return (user.status === true ? onlineUsers.push(user) : offlineUsers.push(user))
+            this.checkMarkUser(user.uid)
+            if (this.checkMarkUser(user.uid) === true) {
+                if (user.status === true) {
+                    markUsers.push(user)
+                } else {
+                    offlineUsers.push(user)
+                }
+            } else {
+                if (user.status === false) {
+                    offlineUsers.push(user)
+                } else {
+                    onlineUsers.push(user)
+                }
+            }
+            return true
         })
-        users = [...onlineUsers, ...offlineUsers]
+
+        users = [...markUsers, ...onlineUsers, ...offlineUsers]
         const listUsers = users.map(
             (user) => this.renderCategory(user)
         )

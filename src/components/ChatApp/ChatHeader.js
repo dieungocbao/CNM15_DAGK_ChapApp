@@ -13,75 +13,34 @@ class ChatHeader extends Component {
         }).isRequired,
         markUsers: PropTypes.arrayOf(PropTypes.object),
     }
-    state = {
-        isMark: false
-    }
-    getMark = (uid, markUsers) => {
-        if (markUsers.markUser) {
-            if (markUsers.markUser.length > 0) {
-                let check = -1
-                markUsers.markUser.map(mark => {
-                    return (mark.markUser === uid) ? check = 0 : ''
-                })
-                if (check === 0) {
-                    let temp = markUsers.markUser.filter(mark => {
-                        return mark.markUser !== uid
-                    })
-                    this.props.firestore.delete({ collection: 'markUsers', doc: this.props.auth.uid })
-                    this.props.firestore.set(
-                        { collection: 'markUsers', doc: this.props.auth.uid },
-                        {
-                            markUser: temp
-                        }
-                    )
-                } else {
-                    let temp = markUsers.markUser
-                    let mark = {
-                        markUser: uid,
-                        uid: this.props.auth.uid
-                    }
-                    temp.push(mark)
-                    this.props.firestore.set(
-                        { collection: 'markUsers', doc: this.props.auth.uid },
-                        {
-                            markUser: temp
-                        }
-                    )
-                }
-            } else {
-                if (markUsers.markUser.markUser === uid) {
-                    this.props.firestore.delete({ collection: 'markUsers', doc: this.props.auth.uid })
-                }
-                else {
-                    let temp = []
-                    temp.push(markUsers.markUser)
-                    let mark = {
-                        markUser: uid,
-                        uid: this.props.auth.uid
-                    }
-                    temp.push(mark)
-                    this.props.firestore.set(
-                        { collection: 'markUsers', doc: this.props.auth.uid },
-                        {
-                            markUser: temp
-                        }
-                    )
-                }
-            }
+
+    getMark = (uid) => {
+        let user1 = this.props.auth.uid
+        let user2 = uid
+        user1 = user1.slice(0, 5)
+        user2 = user2.slice(0, 5)
+        let roomKey = user1 + user2
+        let check = -1
+        this.props.listMarkUser.map(mark => {
+            return (mark.markUser === uid) ? check = 0 : null
+        })
+        if (check === 0) {
+            this.props.firestore.delete({ collection: 'markUsers', doc: roomKey })
         } else {
-            let mark = {
-                markUser: uid,
-                uid: this.props.auth.uid
-            }
             this.props.firestore.set(
-                { collection: 'markUsers', doc: this.props.auth.uid },
+                { collection: 'markUsers', doc: roomKey },
                 {
-                    markUser: mark
+                    markUser: uid,
+                    uid: this.props.auth.uid
                 }
             )
         }
     }
     render() {
+        let isMark = false
+        this.props.listMarkUser.map(mark => {
+            return (mark.markUser === this.props.getUserChat.uid) ? isMark = true : null
+        })
         return (
             <div className="chat-header cus-clearfix">
                 <img
@@ -92,7 +51,7 @@ class ChatHeader extends Component {
                 <div className="chat-about">
                     <div className="chat-with">Chat with {this.props.getUserChat.displayName}</div>
                 </div>
-                <i className="fa fa-star" onClick={() => this.getMark(this.props.getUserChat.uid, this.props.listMarkUser)} />
+                <i className={(isMark === true) ? "fa fa-star yellow" : "fa fa-star"} onClick={() => this.getMark(this.props.getUserChat.uid)} />
             </div>
         )
     }
