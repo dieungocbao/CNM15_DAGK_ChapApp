@@ -74,6 +74,12 @@ class ListUsers extends Component {
         if (this.props.searchName) {
             users = users.filter(user => user.displayName.toLowerCase().indexOf(this.props.searchName) !== -1)
         }
+        let onlineUsers = []
+        let offlineUsers = []
+        users.map(user => {
+            return (user.status === true ? onlineUsers.push(user) : offlineUsers.push(user))
+        })
+        users = [...onlineUsers, ...offlineUsers]
         const listUsers = users.map(
             (user) => this.renderCategory(user)
         )

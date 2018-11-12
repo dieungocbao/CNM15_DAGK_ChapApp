@@ -6,8 +6,15 @@ import { firestoreConnect } from 'react-redux-firebase'
 
 class ChatHeader extends Component {
     static propTypes = {
-        auth: PropTypes.object
+        auth: PropTypes.object,
+        usersByPerson: PropTypes.arrayOf(PropTypes.object),
+        firestore: PropTypes.shape({
+            set: PropTypes.func.isRequired
+        }).isRequired
     }
+    // getMark = (uid) => {
+    //     let users = this.props.usersByPerson[0].users
+    // }
     render() {
         return (
             <div className="chat-header cus-clearfix">
@@ -19,7 +26,7 @@ class ChatHeader extends Component {
                 <div className="chat-about">
                     <div className="chat-with">Chat with {this.props.getUserChat.displayName}</div>
                 </div>
-                <i className="fa fa-star" />
+                <i className="fa fa-star" onClick={() => this.getMark(this.props.getUserChat.uid)} />
             </div>
         )
     }
@@ -28,11 +35,22 @@ class ChatHeader extends Component {
 
 const mapStateToProps = state => {
     return {
-        auth: state.firebase.auth
+        auth: state.firebase.auth,
+        usersByPerson: state.firestore.ordered.usersByPerson ? state.firestore.ordered.usersByPerson.map(c => c) : []
     }
 }
 const mapDispatchToProps = {}
 export default compose(
     connect(mapStateToProps, mapDispatchToProps),
-    firestoreConnect(),
+    firestoreConnect((props) => {
+        if (!props.uid) return []
+        return [
+            {
+                collection: 'usersByPerson',
+                where: [
+                    ['uid', '==', props.uid]
+                ]
+            }
+        ]
+    })
 )(ChatHeader)

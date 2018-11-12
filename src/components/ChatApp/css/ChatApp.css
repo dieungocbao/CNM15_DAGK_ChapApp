@@ -239,3 +239,7 @@ hr {
   width: 200px;
   height: auto;
 }
+
+i.fa-star {
+  cursor: pointer;
+}
