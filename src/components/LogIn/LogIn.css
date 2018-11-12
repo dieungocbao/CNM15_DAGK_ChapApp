@@ -1,0 +1,19 @@
+.login .btn i {
+    margin-right: 10px;
+}
+ .login .btn {
+    font-size: 18px;
+    padding: 10px 20px;
+}
+ .login {
+    margin-top: 50px;
+} 
+
+.login p {
+    font-size: 24px;
+    margin-bottom: 50px;
+    color: #595959;
+}
+.logout {
+    margin-bottom: 20px;
+}

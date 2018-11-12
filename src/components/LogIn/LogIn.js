@@ -65,17 +65,21 @@ class LogIn extends Component {
     if (isEmpty(this.props.auth)) {
       return (
         <div>
-          <button
-            onClick={this.onLogIn}
-          >Log in with Google</button>
+          <div className="text-center login">
+            <p>Please click button below to sign in!</p>
+            <button className="btn btn-danger" onClick={this.onLogIn}>
+              <i className="fa fa-google" />
+              Log In With Google
+          </button>
+          </div>
         </div>
       )
     }
-    return <button
-      style={{ width: "20rem" }}
-      onClick={this.onLogOut}
-    > Logout</button>
-
+    return (
+      <div className="text-center logout">
+        <button className="btn btn-danger" onClick={this.onLogOut}>Log Out</button>
+      </div>
+    )
   }
 }
 const mapStateToProps = state => {

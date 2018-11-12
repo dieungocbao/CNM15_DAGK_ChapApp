@@ -18,9 +18,6 @@ class MainUser extends Component {
                 />
                 <div className="about">
                     <div className="name">{this.props.auth.displayName}</div>
-                    <div className="status">
-                        <span><i className="fa fa-circle online" /> online</span>
-                    </div>
                 </div>
             </div>
         )
