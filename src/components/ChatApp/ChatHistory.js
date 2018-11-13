@@ -16,7 +16,7 @@ class ChatHistory extends Component {
             (message.uid === this.props.uid ?
                 <li className="cus-clearfix" key={index}>
                     <div className="message-data align-right">
-                        <span className="message-data-time">10:10 AM, Today</span>
+                        <span className="message-data-time"></span>
                         &nbsp; &nbsp;
                         <span className="message-data-name">{this.props.displayName}</span>
                         &nbsp;

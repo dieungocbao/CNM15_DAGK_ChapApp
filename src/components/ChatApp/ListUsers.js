@@ -103,7 +103,12 @@ class ListUsers extends Component {
             }
             return true
         })
-
+        // console.log('mark')
+        // console.log(markUsers)
+        // console.log('online')
+        // console.log(onlineUsers)
+        // console.log('offline')
+        // console.log(offlineUsers)
         users = [...markUsers, ...onlineUsers, ...offlineUsers]
         const listUsers = users.map(
             (user) => this.renderCategory(user)
